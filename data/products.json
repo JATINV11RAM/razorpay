@@ -1,0 +1,62 @@
+[
+  {
+    "id": "SKU001",
+    "name": "Handloom Cotton Kurta",
+    "description": "Traditional handloom cotton kurta, comfortable for daily wear",
+    "price": 899,
+    "currency": "INR",
+    "category": "Clothing",
+    "inventory": 50,
+    "image_url": "https://via.placeholder.com/300x300?text=Kurta"
+  },
+  {
+    "id": "SKU002",
+    "name": "Banarasi Silk Saree",
+    "description": "Premium Banarasi silk saree with gold zari work",
+    "price": 4999,
+    "currency": "INR",
+    "category": "Clothing",
+    "inventory": 20,
+    "image_url": "https://via.placeholder.com/300x300?text=Saree"
+  },
+  {
+    "id": "SKU003",
+    "name": "Brass Pooja Thali Set",
+    "description": "Handcrafted brass pooja thali with diyas and incense holder",
+    "price": 1299,
+    "currency": "INR",
+    "category": "Home & Decor",
+    "inventory": 35,
+    "image_url": "https://via.placeholder.com/300x300?text=Thali"
+  },
+  {
+    "id": "SKU004",
+    "name": "Darjeeling First Flush Tea",
+    "description": "Premium Darjeeling first flush loose leaf tea, 250g",
+    "price": 599,
+    "currency": "INR",
+    "category": "Food & Beverages",
+    "inventory": 100,
+    "image_url": "https://via.placeholder.com/300x300?text=Tea"
+  },
+  {
+    "id": "SKU005",
+    "name": "Rajasthani Juti Shoes",
+    "description": "Handcrafted traditional Rajasthani mojari shoes with embroidery",
+    "price": 1499,
+    "currency": "INR",
+    "category": "Footwear",
+    "inventory": 25,
+    "image_url": "https://via.placeholder.com/300x300?text=Juti"
+  },
+  {
+    "id": "SKU006",
+    "name": "Organic Turmeric Powder",
+    "description": "Pure organic turmeric powder from Kerala farms, 500g",
+    "price": 299,
+    "currency": "INR",
+    "category": "Food & Beverages",
+    "inventory": 200,
+    "image_url": "https://via.placeholder.com/300x300?text=Turmeric"
+  }
+]

@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RazorACP — Agentic Commerce for India</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #072654;
+      --blue: #3395FF;
+      --blue-dark: #1a7ae8;
+      --blue-light: #e8f3ff;
+      --green: #15B79E;
+      --green-light: #e6faf7;
+      --red: #F04438;
+      --red-light: #fef3f2;
+      --orange: #F79009;
+      --white: #ffffff;
+      --gray-50: #F9FAFB;
+      --gray-100: #F2F4F7;
+      --gray-200: #E4E7EC;
+      --gray-400: #98A2B3;
+      --gray-600: #475467;
+      --gray-800: #1D2939;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--navy);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 24px; }
+    .logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
+    .logo span { color: var(--blue); }
+    .nav-pill {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .test-badge {
+      background: rgba(51, 149, 255, 0.15);
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.8px;
+      border: 1px solid rgba(51,149,255,0.3);
+    }
+    .status-dot-live {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 3px rgba(21,183,158,0.2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 3px rgba(21,183,158,0.2)} 50%{box-shadow:0 0 0 6px rgba(21,183,158,0.1)} }
+
+    /* ── MAIN ── */
+    .main { max-width: 960px; margin: 0 auto; padding: 24px 20px; }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0f3a7a 60%, #1a5fa8 100%);
+      border-radius: var(--radius);
+      padding: 28px 36px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(51,149,255,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 40%;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(51,149,255,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .hero h1 span { color: var(--blue); }
+    .hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 560px;
+      margin-bottom: 20px;
+    }
+    .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .hero-tag {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* ── GRID ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+
+    /* ── CARD ── */
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-200);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .icon-blue { background: var(--blue-light); }
+    .icon-green { background: var(--green-light); }
+    .card-body { padding: 14px; }
+
+    /* ── FORM ── */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--gray-800);
+      transition: border-color 0.2s;
+      background: white;
+    }
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(51,149,255,0.1);
+    }
+    .form-textarea { height: 80px; resize: none; }
+
+    .run-btn {
+      width: 100%;
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .run-btn:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(51,149,255,0.3); }
+    .run-btn:disabled { background: var(--gray-400); cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* ── PRODUCTS ── */
+    .products-list { display: flex; flex-direction: column; gap: 8px; }
+    .product-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .product-row:hover { border-color: var(--blue); background: var(--blue-light); }
+    .product-row.selected { border-color: var(--blue); background: var(--blue-light); }
+    .product-row.selected .product-name { color: var(--blue); }
+    .product-emoji { font-size: 20px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: var(--gray-100); border-radius: 8px; flex-shrink: 0; }
+    .product-info { flex: 1; min-width: 0; }
+    .product-name { font-size: 13px; font-weight: 600; color: var(--gray-800); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .product-cat { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+    .product-price { font-size: 14px; font-weight: 700; color: var(--navy); flex-shrink: 0; }
+
+    /* ── LOG ── */
+    .log-box {
+      background: #0d1117;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 12.5px;
+      height: 260px;
+      overflow-y: auto;
+      line-height: 2;
+    }
+    .log-empty { color: #4a5568; font-style: italic; }
+    .log-time { color: #4a5568; }
+    .log-event-discover { color: #63b3ed; }
+    .log-event-decide { color: #f6ad55; }
+    .log-event-token { color: #9f7aea; }
+    .log-event-checkout { color: #68d391; }
+    .log-event-payment { color: #f6ad55; }
+    .log-event-success { color: #68d391; }
+    .log-event-error { color: #fc8181; }
+    .log-event-escalate { color: #fc8181; }
+    .log-detail { color: #e2e8f0; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      position: relative;
+    }
+    .step::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: calc(100% - 120px);
+      height: 2px;
+      background: var(--gray-200);
+      z-index: 0;
+      left: 120px;
+    }
+    .step:last-child::after { display: none; }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gray-100);
+      color: var(--gray-400);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      transition: all 0.3s;
+    }
+    .step-num.active { background: var(--blue); color: white; box-shadow: 0 0 0 4px rgba(51,149,255,0.2); }
+    .step-num.done { background: var(--green); color: white; }
+    .step-label { font-size: 11px; font-weight: 600; color: var(--gray-400); white-space: nowrap; z-index: 1; }
+    .step-label.active { color: var(--blue); }
+    .step-label.done { color: var(--green); }
+
+    /* ── RESULT ── */
+    .result-card {
+      background: white;
+      border: 1.5px solid var(--green);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: none;
+      margin-bottom: 20px;
+    }
+    .result-header {
+      background: var(--green-light);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .result-header h3 { font-size: 14px; font-weight: 700; color: var(--green); }
+    .result-body { padding: 0; }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13px;
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-label { color: var(--gray-600); font-weight: 500; }
+    .result-value { font-weight: 700; color: var(--gray-800); font-family: 'SF Mono', monospace; font-size: 12px; }
+    .result-value.highlight { color: var(--blue); font-size: 15px; font-family: 'Inter', sans-serif; }
+
+    /* ── AUDIT ── */
+    .audit-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); display: none; margin-bottom: 20px; }
+    .audit-row {
+      display: flex;
+      gap: 16px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 12.5px;
+      align-items: flex-start;
+    }
+    .audit-row:last-child { border-bottom: none; }
+    .audit-time { color: var(--gray-400); font-family: monospace; min-width: 75px; padding-top: 1px; }
+    .audit-event {
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      min-width: 130px;
+      text-align: center;
+    }
+    .event-session_created { background: #eff6ff; color: #3b82f6; }
+    .event-payment_completed { background: var(--green-light); color: var(--green); }
+    .event-payment_failed { background: var(--red-light); color: var(--red); }
+    .audit-detail { color: var(--gray-600); font-size: 13px; }
+
+    /* ── STATS ── */
+    .stat-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); padding: 14px; }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .stat-value { font-size: 22px; font-weight: 800; color: var(--navy); letter-spacing: -1px; }
+    .stat-sub { font-size: 12px; color: var(--gray-400); margin-top: 4px; }
+
+    /* scrollbar */
+    .log-box::-webkit-scrollbar { width: 4px; }
+    .log-box::-webkit-scrollbar-track { background: transparent; }
+    .log-box::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 2px; }
+
+    .emoji-map { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo">Razor<span>ACP</span></div>
+    <div class="nav-pill">AGENTIC COMMERCE PROTOCOL</div>
+  </div>
+  <div class="topbar-right">
+    <div class="test-badge">TEST MODE</div>
+    <div class="status-dot-live"></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">India's First ACP Implementation</div>
+    <h1>AI Agents Can Now Shop<br>for <span>Indian Merchants</span></h1>
+    <p>RazorACP bridges the open Agentic Commerce Protocol with Razorpay's payment infrastructure — making any Indian merchant transactable by AI agents like Gemini or Claude. No human clicks. Full audit trail.</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🤖 ACP Protocol (OpenAI + Stripe)</span>
+      <span class="hero-tag">💳 Razorpay Test Mode</span>
+      <span class="hero-tag">🇮🇳 INR Native</span>
+      <span class="hero-tag">🔍 Full Audit Trail</span>
+      <span class="hero-tag">⚡ Gemini AI Buyer</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="stat-card">
+      <div class="stat-label">Orders Created</div>
+      <div class="stat-value" id="statOrders">0</div>
+      <div class="stat-sub">via AI agent in test mode</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Value Processed</div>
+      <div class="stat-value" id="statValue">₹0</div>
+      <div class="stat-sub">INR in this session</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Protocol</div>
+      <div class="stat-value" style="font-size:18px;padding-top:4px;">ACP v2026</div>
+      <div class="stat-sub">Agentic Commerce Protocol</div>
+    </div>
+  </div>
+
+  <!-- FLOW STEPS -->
+  <div class="card" style="padding:20px;margin-bottom:20px;">
+    <div style="font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">Agent Flow</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num" id="step1">1</div>
+        <div class="step-label" id="step1l">Discover</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step2">2</div>
+        <div class="step-label" id="step2l">Decide</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step3">3</div>
+        <div class="step-label" id="step3l">Token</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step4">4</div>
+        <div class="step-label" id="step4l">Checkout</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step5">5</div>
+        <div class="step-label" id="step5l">Pay</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step6">6</div>
+        <div class="step-label" id="step6l">Audit</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENT + CATALOG -->
+  <div class="grid-2" style="margin-bottom:20px;">
+
+    <!-- Agent Control -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon icon-blue">🤖</div>
+          AI Buyer Agent
+        </div>
+        <span style="font-size:11px;color:var(--green);font-weight:600;">● Gemini 3.6 Flash</span>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label class="form-label">User Goal</label>
+          <textarea class="form-textarea" id="userGoal">I want to buy something traditional and Indian for gifting</textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Budget (₹)</label>
+          <input type="number" class="form-input" id="budget" value="2000" min="100" max="10000"/>
+        </div>
+        <button class="run-btn" id="runBtn" onclick="runAgent()">
+          <span>▶</span> Run AI Buyer Agent
+        </button>
+      </div>
+    </div>
+
+    <!-- Catalog -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon icon-green">🛍️</div>
+          Desi Bazaar — Merchant Catalog
+        </div>
+        <span style="font-size:11px;color:var(--gray-400);font-weight:500;" id="catalogCount">Loading...</span>
+      </div>
+      <div class="card-body" style="padding:16px;">
+        <div class="products-list" id="productsList">
+          <div style="color:var(--gray-400);font-size:13px;text-align:center;padding:20px;">Connecting to merchant...</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LIVE LOG -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon icon-blue">📡</div>
+        Live Agent Log
+      </div>
+      <span style="font-size:11px;color:var(--gray-400);" id="logStatus">Idle</span>
+    </div>
+    <div class="card-body" style="padding:16px;">
+      <div class="log-box" id="logBox">
+        <span class="log-empty">Waiting for agent to start...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <span style="font-size:20px;">✅</span>
+      <h3>Payment Completed — Razorpay Order Created</h3>
+    </div>
+    <div class="result-body" id="resultRows"></div>
+  </div>
+
+  <!-- AUDIT -->
+  <div class="audit-card" id="auditCard">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon icon-blue">🔍</div>
+        Audit Trail
+      </div>
+      <span style="font-size:11px;color:var(--gray-400);">Every action logged — bounded, explainable, gated</span>
+    </div>
+    <div id="auditRows"></div>
+  </div>
+
+</div>
+
+<script>
+  const MERCHANT = 'http://localhost:8000';
+  const PSP = 'http://localhost:8001';
+  const DECIDE = 'http://localhost:8002';
+  const AGENT_ID = 'razorpacp-browser-agent-v1';
+
+  let orderCount = 0;
+  let totalValue = 0;
+
+  const EMOJIS = {
+    'Clothing': '👗',
+    'Home & Decor': '🪔',
+    'Food & Beverages': '🍵',
+    'Footwear': '👟',
+  };
+
+  async function loadProducts() {
+    try {
+      const res = await fetch(`${MERCHANT}/products`);
+      const data = await res.json();
+      document.getElementById('catalogCount').textContent = `${data.products.length} items`;
+      document.getElementById('productsList').innerHTML = data.products.map(p => `
+        <div class="product-row" id="prod-${p.id}">
+          <div class="product-emoji">${EMOJIS[p.category] || '📦'}</div>
+          <div class="product-info">
+            <div class="product-name">${p.name}</div>
+            <div class="product-cat">${p.category}</div>
+          </div>
+          <div class="product-price">₹${p.price}</div>
+        </div>
+      `).join('');
+    } catch(e) {
+      document.getElementById('productsList').innerHTML = `<div style="color:var(--red);font-size:13px;">⚠ Could not load catalog. Is merchant server running on :8000?</div>`;
+    }
+  }
+
+  function setStep(n, state) {
+    const el = document.getElementById(`step${n}`);
+    const lbl = document.getElementById(`step${n}l`);
+    el.className = `step-num ${state}`;
+    lbl.className = `step-label ${state}`;
+    if (state === 'done') el.textContent = '✓';
+  }
+
+  function resetSteps() {
+    for(let i=1;i<=6;i++) setStep(i, '');
+  }
+
+  function addLog(event, detail, type='info') {
+    const box = document.getElementById('logBox');
+    const time = new Date().toLocaleTimeString();
+    const cls = `log-event-${event.toLowerCase()}`;
+    box.innerHTML += `<div><span class="log-time">[${time}]</span> <span class="${cls} log-event-label">[${event}]</span> <span class="log-detail">${detail}</span></div>`;
+    box.scrollTop = box.scrollHeight;
+    document.getElementById('logStatus').textContent = event;
+  }
+
+  async function runAgent() {
+    const goal = document.getElementById('userGoal').value.trim();
+    const budget = parseFloat(document.getElementById('budget').value);
+    const btn = document.getElementById('runBtn');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span style="animation:spin 1s linear infinite;display:inline-block">⏳</span> Agent Running...';
+
+    document.getElementById('logBox').innerHTML = '';
+    document.getElementById('resultCard').style.display = 'none';
+    document.getElementById('auditCard').style.display = 'none';
+    document.querySelectorAll('.product-row').forEach(el => el.classList.remove('selected'));
+    resetSteps();
+
+    try {
+      // STEP 1: Discover
+      setStep(1, 'active');
+      addLog('DISCOVER', 'Fetching product catalog from Desi Bazaar...');
+      const catRes = await fetch(`${MERCHANT}/products`);
+      const catalog = await catRes.json();
+      addLog('DISCOVER', `Found ${catalog.products.length} products at ${catalog.merchant}`);
+      setStep(1, 'done'); setStep(2, 'active');
+
+      // STEP 2: AI Decision
+      addLog('DECIDE', `Sending goal to Gemini AI: "${goal}"`);
+      const decideRes = await fetch(`${DECIDE}/decide`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ goal, budget, products: catalog.products })
+      });
+      const decision = await decideRes.json();
+      addLog('DECIDE', `Selected: ${decision.product_id} — ${decision.reason}`);
+      const prodEl = document.getElementById(`prod-${decision.product_id}`);
+      if (prodEl) prodEl.classList.add('selected');
+      setStep(2, 'done'); setStep(3, 'active');
+
+      // STEP 3: Token
+      addLog('TOKEN', 'Requesting Shared Payment Token (SPT) from PSP...');
+      const tokenRes = await fetch(`${PSP}/v1/tokens`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ buyer_agent_id: AGENT_ID, max_amount: budget, currency: 'INR', expiry_seconds: 300 })
+      });
+      const tokenData = await tokenRes.json();
+      addLog('TOKEN', `Token issued: ${tokenData.shared_payment_token} | Max: ₹${tokenData.max_amount} | TTL: 5min`);
+      setStep(3, 'done'); setStep(4, 'active');
+
+      // STEP 4: Checkout
+      addLog('CHECKOUT', `Creating checkout session for ${decision.product_id} x${decision.quantity || 1}...`);
+      const checkoutRes = await fetch(`${MERCHANT}/checkouts`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          product_id: decision.product_id,
+          quantity: decision.quantity || 1,
+          buyer_agent_id: AGENT_ID,
+          max_authorized_amount: budget
+        })
+      });
+      const checkout = await checkoutRes.json();
+      addLog('CHECKOUT', `Session: ${checkout.session_id.slice(0,8)}... | Total: ₹${checkout.total}`);
+      setStep(4, 'done'); setStep(5, 'active');
+
+      // STEP 5: Pay
+      addLog('PAYMENT', 'Delegating payment to Razorpay via ACP PSP adapter...');
+      const completeRes = await fetch(`${MERCHANT}/checkouts/${checkout.session_id}/complete`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ shared_payment_token: tokenData.shared_payment_token })
+      });
+
+      if (completeRes.ok) {
+        const result = await completeRes.json();
+        addLog('SUCCESS', `✓ Razorpay Order Created: ${result.razorpay_order_id}`);
+        setStep(5, 'done'); setStep(6, 'active');
+
+        // Update stats
+        orderCount++;
+        totalValue += checkout.total;
+        document.getElementById('statOrders').textContent = orderCount;
+        document.getElementById('statValue').textContent = `₹${totalValue.toLocaleString('en-IN')}`;
+
+        // Result card
+        const rc = document.getElementById('resultCard');
+        rc.style.display = 'block';
+        document.getElementById('resultRows').innerHTML = `
+          <div class="result-row"><span class="result-label">Product Selected by AI</span><span class="result-value highlight">${decision.product_id}</span></div>
+          <div class="result-row"><span class="result-label">Amount Paid</span><span class="result-value highlight">₹${checkout.total}</span></div>
+          <div class="result-row"><span class="result-label">Razorpay Order ID</span><span class="result-value">${result.razorpay_order_id}</span></div>
+          <div class="result-row"><span class="result-label">Payment Token Used</span><span class="result-value">${tokenData.shared_payment_token}</span></div>
+          <div class="result-row"><span class="result-label">Session ID</span><span class="result-value">${checkout.session_id}</span></div>
+          <div class="result-row"><span class="result-label">AI Reasoning</span><span class="result-value" style="font-family:Inter;text-align:right;max-width:300px;">${decision.reason}</span></div>
+        `;
+
+        // Audit trail
+        const sessionRes = await fetch(`${MERCHANT}/checkouts/${checkout.session_id}`);
+        const session = await sessionRes.json();
+        const ac = document.getElementById('auditCard');
+        ac.style.display = 'block';
+        document.getElementById('auditRows').innerHTML = session.audit_trail.map(e => `
+          <div class="audit-row">
+            <span class="audit-time">${new Date(e.timestamp * 1000).toLocaleTimeString()}</span>
+            <span class="audit-event event-${e.event}">${e.event.replace(/_/g,' ')}</span>
+            <span class="audit-detail">${e.details || e.detail}</span>
+          </div>
+        `).join('');
+
+        setStep(6, 'done');
+        document.getElementById('logStatus').textContent = 'Completed';
+
+      } else {
+        const err = await completeRes.json();
+        addLog('ERROR', `Payment failed: ${err.detail}`);
+        addLog('ESCALATE', 'Stopping — escalating to human operator. Audit trail preserved.');
+        setStep(5, '');
+        document.getElementById('logStatus').textContent = 'Failed';
+      }
+
+    } catch(e) {
+      addLog('ERROR', `${e.message} — check that all 3 servers are running`);
+      document.getElementById('logStatus').textContent = 'Error';
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<span>▶</span> Run AI Buyer Agent';
+  }
+
+  loadProducts();
+</script>
+</body>
+</html>

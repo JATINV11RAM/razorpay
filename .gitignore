@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated data — the SQLite database is rebuilt by POST /api/data/generate.
+data/*.db
+data/*.db-journal
+data/*.sqlite3
+
+# Uploads land in the store, not on disk, but keep this reserved.
+data/uploads/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.eslintcache
+
+# Secrets. `.env.example` is committed; `.env` never is.
+.env
+.env.local
+.env.*.local
+
+# Editors and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
