@@ -1,1 +1,1 @@
-PYTHONPATH=/app uvicorn agent.decide:app --host 0.0.0.0 --port $PORT
+web: PYTHONPATH=/app uvicorn agent.decide:app --host 0.0.0.0 --port $PORT
