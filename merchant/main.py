@@ -19,8 +19,8 @@ app.add_middleware(
 
 # Load products
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-with open(os.path.join(BASE_DIR, "data", "products.json")) as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(BASE_DIR, "products.json")) as f:
     PRODUCTS = json.load(f)
 
 # In-memory session store
