@@ -59,4 +59,15 @@
     "inventory": 200,
     "image_url": "https://via.placeholder.com/300x300?text=Turmeric"
   }
+  ,
+  {
+    "id": "SKU007",
+    "name": "Madhubani Art Print",
+    "description": "Hand-painted Madhubani art print on canvas, traditional Bihar style",
+    "price": 799,
+    "currency": "INR",
+    "category": "Art & Decor",
+    "inventory": 15,
+    "image_url": "https://via.placeholder.com/300x300?text=Madhubani"
+  }
 ]

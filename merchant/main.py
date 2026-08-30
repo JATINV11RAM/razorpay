@@ -18,6 +18,11 @@ app.add_middleware(
 )
 
 # Load products
+"""
+RazorACP — ACP Merchant API
+Implements the Agentic Commerce Protocol (ACP) Product Feed,
+Checkout Session, and Delegated Payment specifications.
+"""
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(BASE_DIR, "products.json")) as f:
