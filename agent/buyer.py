@@ -1,3 +1,8 @@
+"""
+RazorACP — AI Buyer Agent
+Autonomous shopping agent using Google Gemini and Serper
+to search, score, and purchase products via RazorACP PSP.
+"""
 from google import genai
 import requests
 import json
