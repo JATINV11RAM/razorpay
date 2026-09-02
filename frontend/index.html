@@ -33,17 +33,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: var(--gray-50); color: var(--gray-800); min-height: 100vh; }
 
-    .topbar {
-      background: var(--navy);
-      padding: 0 32px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    .topbar { background: var(--navy); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
     .topbar-left { display: flex; align-items: center; gap: 24px; }
     .logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
     .logo span { color: var(--blue); }
@@ -73,6 +63,7 @@
     .card-title .icon { width: 26px; height: 26px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
     .icon-blue { background: var(--blue-light); }
     .icon-green { background: var(--green-light); }
+    .icon-orange { background: #fff7ed; }
     .card-body { padding: 16px; }
 
     .stat-card { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); padding: 16px; }
@@ -86,8 +77,6 @@
     .form-input:focus, .form-textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(51,149,255,0.1); }
     .form-textarea { height: 75px; resize: none; }
 
-    .budget-row { display: flex; gap: 8px; align-items: flex-end; }
-    .budget-row .form-group { flex: 1; margin-bottom: 0; }
     .budget-presets { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
     .preset-btn { background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200); padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
     .preset-btn:hover { background: var(--blue-light); color: var(--blue); border-color: var(--blue); }
@@ -105,15 +94,18 @@
     .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--gray-100); color: var(--gray-400); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1; transition: all 0.3s; }
     .step-num.active { background: var(--blue); color: white; box-shadow: 0 0 0 4px rgba(51,149,255,0.2); }
     .step-num.done { background: var(--green); color: white; }
+    .step-num.pending { background: var(--orange); color: white; }
     .step-label { font-size: 10px; font-weight: 600; color: var(--gray-400); white-space: nowrap; z-index: 1; }
     .step-label.active { color: var(--blue); }
     .step-label.done { color: var(--green); }
+    .step-label.pending { color: var(--orange); }
 
-    .log-box { background: #0d1117; border-radius: 8px; padding: 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; height: 240px; overflow-y: auto; line-height: 1.9; }
+    .log-box { background: #0d1117; border-radius: 8px; padding: 14px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; height: 200px; overflow-y: auto; line-height: 1.9; }
     .log-empty { color: #4a5568; font-style: italic; }
     .log-time { color: #4a5568; }
     .log-search { color: #63b3ed; font-weight: bold; }
     .log-decide { color: #f6ad55; font-weight: bold; }
+    .log-confirm { color: #f6ad55; font-weight: bold; }
     .log-token { color: #9f7aea; font-weight: bold; }
     .log-payment { color: #f6ad55; font-weight: bold; }
     .log-success { color: #68d391; font-weight: bold; }
@@ -123,13 +115,36 @@
     .log-detail { color: #e2e8f0; }
 
     .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .result-item { border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 10px; font-size: 12px; transition: all 0.15s; }
+    .result-item { border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 10px; font-size: 12px; transition: all 0.15s; cursor: pointer; }
+    .result-item:hover { border-color: var(--blue); background: var(--blue-light); }
     .result-item.selected { border-color: var(--blue); background: var(--blue-light); }
     .result-item.selected .result-title { color: var(--blue); }
+    .result-item.ai-pick { border-color: var(--green); background: var(--green-light); }
+    .result-item.ai-pick .result-title { color: var(--green); }
     .result-source { font-size: 10px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
     .result-title { font-weight: 600; color: var(--gray-800); font-size: 12px; line-height: 1.3; margin-bottom: 4px; }
     .result-price { font-size: 14px; font-weight: 800; color: var(--navy); }
+    .result-badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+    .badge-ai { background: var(--green-light); color: var(--green); }
     .result-empty { color: var(--gray-400); font-size: 13px; text-align: center; padding: 20px; }
+
+    /* Confirmation card */
+    .confirm-card { background: white; border: 2px solid var(--orange); border-radius: var(--radius); overflow: hidden; display: none; margin-bottom: 16px; }
+    .confirm-header { background: #fff7ed; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
+    .confirm-header h3 { font-size: 14px; font-weight: 700; color: var(--orange); }
+    .confirm-body { padding: 16px 18px; }
+    .confirm-product { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--gray-50); border-radius: 8px; margin-bottom: 12px; }
+    .confirm-product-info .name { font-size: 14px; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+    .confirm-product-info .source { font-size: 11px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; }
+    .confirm-product-info .reason { font-size: 12px; color: var(--gray-600); margin-top: 6px; font-style: italic; }
+    .confirm-price { font-size: 24px; font-weight: 800; color: var(--navy); }
+    .confirm-actions { display: flex; gap: 10px; }
+    .confirm-btn { flex: 1; padding: 11px; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif; cursor: pointer; border: none; transition: all 0.2s; }
+    .confirm-pay { background: var(--green); color: white; }
+    .confirm-pay:hover { background: #12a08a; }
+    .confirm-change { background: var(--gray-100); color: var(--gray-600); border: 1.5px solid var(--gray-200); }
+    .confirm-change:hover { background: var(--gray-200); }
+    .choose-hint { font-size: 11px; color: var(--gray-400); text-align: center; margin-top: 10px; display: none; }
 
     .result-card { background: white; border: 1.5px solid var(--green); border-radius: var(--radius); overflow: hidden; display: none; margin-bottom: 16px; }
     .result-header { background: var(--green-light); padding: 12px 18px; display: flex; align-items: center; gap: 10px; }
@@ -144,8 +159,9 @@
     .audit-row { display: flex; gap: 14px; padding: 10px 18px; border-bottom: 1px solid var(--gray-100); font-size: 12px; align-items: flex-start; }
     .audit-row:last-child { border-bottom: none; }
     .audit-time { color: var(--gray-400); font-family: monospace; min-width: 70px; }
-    .audit-event { font-weight: 700; font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; min-width: 120px; text-align: center; }
+    .audit-event { font-weight: 700; font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; min-width: 130px; text-align: center; }
     .event-session_created { background: #eff6ff; color: #3b82f6; }
+    .event-user_confirmed { background: #fff7ed; color: var(--orange); }
     .event-payment_completed { background: var(--green-light); color: var(--green); }
     .event-payment_failed { background: var(--red-light); color: var(--red); }
     .audit-detail { color: var(--gray-600); }
@@ -173,13 +189,13 @@
   <div class="hero">
     <div class="hero-eyebrow">India's First ACP Implementation</div>
     <h1>AI Agents Can Now Shop<br>for <span>Indian Merchants</span></h1>
-    <p>RazorACP bridges the open Agentic Commerce Protocol with Razorpay's payment infrastructure. The AI agent searches real products from Amazon, Flipkart, Myntra and more — picks the best deal — and pays via Razorpay automatically.</p>
+    <p>RazorACP bridges the open Agentic Commerce Protocol with Razorpay's payment infrastructure. The AI agent searches real products from Amazon, Flipkart, Myntra and more — picks the best deal — and pays via Razorpay with your confirmation.</p>
     <div class="hero-tags">
       <span class="hero-tag">🤖 ACP Protocol</span>
       <span class="hero-tag">🛒 Real Google Shopping</span>
       <span class="hero-tag">💳 Razorpay Test Mode</span>
       <span class="hero-tag">🇮🇳 INR Native</span>
-      <span class="hero-tag">🔍 Full Audit Trail</span>
+      <span class="hero-tag">✅ User Consent Gated</span>
     </div>
   </div>
 
@@ -206,14 +222,13 @@
     <div class="steps">
       <div class="step"><div class="step-num" id="step1">1</div><div class="step-label" id="step1l">Search</div></div>
       <div class="step"><div class="step-num" id="step2">2</div><div class="step-label" id="step2l">Decide</div></div>
-      <div class="step"><div class="step-num" id="step3">3</div><div class="step-label" id="step3l">Token</div></div>
+      <div class="step"><div class="step-num" id="step3">3</div><div class="step-label" id="step3l">Confirm</div></div>
       <div class="step"><div class="step-num" id="step4">4</div><div class="step-label" id="step4l">Pay</div></div>
       <div class="step"><div class="step-num" id="step5">5</div><div class="step-label" id="step5l">Audit</div></div>
     </div>
   </div>
 
   <div class="grid-2" style="margin-bottom:16px;">
-
     <div class="card">
       <div class="card-header">
         <div class="card-title"><div class="icon icon-blue">🤖</div>AI Buyer Agent</div>
@@ -251,7 +266,29 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Confirmation Card -->
+  <div class="confirm-card" id="confirmCard">
+    <div class="confirm-header">
+      <span style="font-size:18px;">🤖</span>
+      <h3>AI Recommendation — Your Confirmation Required</h3>
+    </div>
+    <div class="confirm-body">
+      <div class="confirm-product">
+        <div class="confirm-product-info">
+          <div class="name" id="confirmName">—</div>
+          <div class="source" id="confirmSource">—</div>
+          <div class="reason" id="confirmReason">—</div>
+        </div>
+        <div class="confirm-price" id="confirmPrice">—</div>
+      </div>
+      <div class="confirm-actions">
+        <button class="confirm-btn confirm-pay" onclick="proceedWithPayment()">✓ Confirm & Pay</button>
+        <button class="confirm-btn confirm-change" onclick="chooseManually()">✗ Choose Different Product</button>
+      </div>
+      <div class="choose-hint" id="chooseHint">👆 Click any product from the results on the right to select it instead</div>
+    </div>
   </div>
 
   <div class="card" style="margin-bottom:16px;">
@@ -280,14 +317,16 @@
 </div>
 
 <script>
-  const PSP = 'https://razorpay-api-9ihw.onrender.com';
-  const DECIDE = 'https://razorpay-api-9ihw.onrender.com';
-  const SERPER_KEY = ''; // handled server-side via decide service
+  const API = 'https://razorpay-api-9ihw.onrender.com';
+  const AGENT_ID = 'razorpacp-browser-v2';
   let orderCount = 0, totalValue = 0;
+  let currentDecision = null;
+  let allProducts = [];
+  let selectedProduct = null;
+  let budget = 0;
+  let goal = '';
 
-  function setBudget(val) {
-    document.getElementById('budget').value = val;
-  }
+  function setBudget(val) { document.getElementById('budget').value = val; }
 
   function setStep(n, state) {
     const el = document.getElementById(`step${n}`);
@@ -295,17 +334,14 @@
     el.className = `step-num ${state}`;
     lbl.className = `step-label ${state}`;
     if (state === 'done') el.textContent = '✓';
+    else el.textContent = n;
   }
 
   function resetSteps() {
-    for (let i = 1; i <= 5; i++) {
-      document.getElementById(`step${i}`).className = 'step-num';
-      document.getElementById(`step${i}`).textContent = i;
-      document.getElementById(`step${i}l`).className = 'step-label';
-    }
+    for (let i = 1; i <= 5; i++) setStep(i, '');
   }
 
-  function addLog(event, detail, type = 'info') {
+  function addLog(event, detail) {
     const box = document.getElementById('logBox');
     const time = new Date().toLocaleTimeString();
     const cls = `log-${event.toLowerCase()}`;
@@ -314,147 +350,190 @@
     document.getElementById('logStatus').textContent = event;
   }
 
-  function showProducts(products, selectedId = null) {
+  function showProducts(products, aiIdx = null) {
     const grid = document.getElementById('resultsGrid');
     document.getElementById('resultCount').textContent = `${products.length} results found`;
     if (!products.length) {
       grid.innerHTML = '<div class="result-empty" style="grid-column:span 2;">No products found within budget</div>';
       return;
     }
-    grid.innerHTML = products.slice(0, 6).map((p, i) => `
-      <div class="result-item ${selectedId === i ? 'selected' : ''}" id="ritem-${i}">
-        <div class="result-source">${p.source}</div>
-        <div class="result-title">${p.title.slice(0, 50)}</div>
-        <div class="result-price">₹${p.price.toLocaleString('en-IN')}</div>
-      </div>
-    `).join('');
+    grid.innerHTML = products.slice(0, 6).map((p, i) => {
+      const isAI = i === aiIdx;
+      const isSelected = selectedProduct && selectedProduct.title === p.title;
+      return `
+        <div class="result-item ${isAI ? 'ai-pick' : ''} ${isSelected ? 'selected' : ''}" onclick="selectProduct(${i})" id="ritem-${i}">
+          <div class="result-source">${p.source} ${isAI ? '<span class="result-badge badge-ai">AI Pick</span>' : ''}</div>
+          <div class="result-title">${p.title.slice(0, 50)}</div>
+          <div class="result-price">₹${p.price.toLocaleString('en-IN')}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function selectProduct(idx) {
+    selectedProduct = allProducts[idx];
+    showProducts(allProducts, currentDecision ? currentDecision.index - 1 : null);
+    document.querySelectorAll('.result-item').forEach((el, i) => {
+      if (i === idx) el.classList.add('selected');
+      else el.classList.remove('selected');
+    });
+
+    // Update confirm card
+    document.getElementById('confirmName').textContent = selectedProduct.title;
+    document.getElementById('confirmSource').textContent = selectedProduct.source;
+    document.getElementById('confirmPrice').textContent = `₹${selectedProduct.price.toLocaleString('en-IN')}`;
+    document.getElementById('confirmReason').textContent = idx === (currentDecision.index - 1)
+      ? currentDecision.reason
+      : 'Manually selected by user';
+
+    addLog('CONFIRM', `User selected: ${selectedProduct.title} | ₹${selectedProduct.price}`);
+  }
+
+  function chooseManually() {
+    document.getElementById('chooseHint').style.display = 'block';
+    addLog('CONFIRM', 'User chose to select a different product — click any result on the right');
+  }
+
+  async function proceedWithPayment() {
+    const product = selectedProduct || { title: currentDecision.title, price: currentDecision.price, source: currentDecision.source };
+
+    document.getElementById('confirmCard').style.display = 'none';
+    setStep(3, 'done'); setStep(4, 'active');
+
+    addLog('TOKEN', 'User confirmed — requesting Shared Payment Token from PSP...');
+    const tokenRes = await fetch(`${API}/v1/tokens`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ buyer_agent_id: AGENT_ID, max_amount: budget, currency: 'INR', expiry_seconds: 300 })
+    });
+    const tokenData = await tokenRes.json();
+    addLog('TOKEN', `Token: ${tokenData.shared_payment_token} | Max: ₹${tokenData.max_amount} | TTL: 5min`);
+
+    addLog('PAYMENT', 'Delegating payment to Razorpay via ACP PSP adapter...');
+    const chargeRes = await fetch(`${API}/v1/charges`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        shared_payment_token: tokenData.shared_payment_token,
+        amount: product.price,
+        currency: 'INR',
+        session_id: `browser-${Date.now()}`,
+        description: `AI Purchase: ${product.title.slice(0, 50)} from ${product.source}`
+      })
+    });
+
+    if (chargeRes.ok) {
+      const charge = await chargeRes.json();
+      addLog('SUCCESS', `✓ Payment complete! Razorpay Order: ${charge.razorpay_order_id}`);
+      setStep(4, 'done'); setStep(5, 'active');
+
+      orderCount++;
+      totalValue += product.price;
+      document.getElementById('statOrders').textContent = orderCount;
+      document.getElementById('statValue').textContent = `₹${totalValue.toLocaleString('en-IN')}`;
+
+      document.getElementById('resultCard').style.display = 'block';
+      document.getElementById('resultRows').innerHTML = `
+        <div class="result-row"><span class="result-label">Product Purchased</span><span class="result-value highlight">${product.title.slice(0, 45)}</span></div>
+        <div class="result-row"><span class="result-label">Source</span><span class="result-value">${product.source}</span></div>
+        <div class="result-row"><span class="result-label">Amount Paid</span><span class="result-value highlight">₹${product.price.toLocaleString('en-IN')}</span></div>
+        <div class="result-row"><span class="result-label">Razorpay Order ID</span><span class="result-value">${charge.razorpay_order_id}</span></div>
+        <div class="result-row"><span class="result-label">Payment Token</span><span class="result-value">${tokenData.shared_payment_token}</span></div>
+      `;
+
+      document.getElementById('auditCard').style.display = 'block';
+      document.getElementById('auditRows').innerHTML = `
+        <div class="audit-row"><span class="audit-time">${new Date().toLocaleTimeString()}</span><span class="audit-event event-session_created">session created</span><span class="audit-detail">Agent initiated search for: ${goal}</span></div>
+        <div class="audit-row"><span class="audit-time">${new Date().toLocaleTimeString()}</span><span class="audit-event event-user_confirmed">user confirmed</span><span class="audit-detail">User approved: ${product.title.slice(0, 40)} | ₹${product.price}</span></div>
+        <div class="audit-row"><span class="audit-time">${new Date().toLocaleTimeString()}</span><span class="audit-event event-payment_completed">payment completed</span><span class="audit-detail">Razorpay order: ${charge.razorpay_order_id} | Token: ${tokenData.shared_payment_token}</span></div>
+      `;
+      setStep(5, 'done');
+      document.getElementById('logStatus').textContent = 'Completed';
+    } else {
+      const err = await chargeRes.json();
+      addLog('ERROR', `Payment failed: ${err.detail}`);
+      addLog('ESCALATE', 'Stopping — escalating to human. No further retries.');
+      document.getElementById('logStatus').textContent = 'Failed';
+    }
+
+    document.getElementById('runBtn').disabled = false;
+    document.getElementById('runBtn').textContent = '▶ Run AI Buyer Agent';
   }
 
   async function runAgent() {
-    const goal = document.getElementById('userGoal').value.trim();
-    const budget = parseFloat(document.getElementById('budget').value);
+    goal = document.getElementById('userGoal').value.trim();
+    budget = parseFloat(document.getElementById('budget').value);
     const btn = document.getElementById('runBtn');
 
     if (!goal) { alert('Please enter what you want to buy'); return; }
     if (!budget || budget < 100) { alert('Please enter a valid budget (min ₹100)'); return; }
 
     btn.disabled = true;
-    btn.textContent = '⏳ Agent Running...';
+    btn.textContent = '⏳ Searching...';
     document.getElementById('logBox').innerHTML = '';
     document.getElementById('resultCard').style.display = 'none';
     document.getElementById('auditCard').style.display = 'none';
+    document.getElementById('confirmCard').style.display = 'none';
+    document.getElementById('chooseHint').style.display = 'none';
     document.getElementById('resultsGrid').innerHTML = '<div class="result-empty" style="grid-column:span 2;">Searching...</div>';
+    selectedProduct = null;
+    currentDecision = null;
+    allProducts = [];
     resetSteps();
 
     try {
-      // STEP 1: Search via decide service (which calls Serper)
       setStep(1, 'active');
       addLog('SEARCH', `Searching Google Shopping for: "${goal}" within ₹${budget}...`);
 
-      const decideRes = await fetch(`${DECIDE}/smart-decide`, {
+      const decideRes = await fetch(`${API}/smart-decide`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ goal, budget })
       });
 
-      if (!decideRes.ok) throw new Error('Search failed — is the decide service running?');
+      if (!decideRes.ok) throw new Error('Search failed — is the API service running?');
       const data = await decideRes.json();
 
       addLog('SEARCH', `Found ${data.all_products.length} products from Amazon, Flipkart, Myntra and more`);
-      showProducts(data.all_products);
+      allProducts = data.all_products;
+      currentDecision = data.decision;
+      selectedProduct = null;
+
+      showProducts(allProducts, currentDecision.index - 1);
       setStep(1, 'done'); setStep(2, 'active');
 
-      // STEP 2: AI decision
-      addLog('DECIDE', `Gemini AI selected: ${data.decision.title}`);
+      addLog('DECIDE', `AI selected: ${data.decision.title}`);
       addLog('DECIDE', `Price: ₹${data.decision.price} | Source: ${data.decision.source}`);
       addLog('DECIDE', `Reason: ${data.decision.reason}`);
       addLog('DECIDE', `Confidence: ${data.decision.confidence.toUpperCase()}`);
 
-      // Highlight selected product
-      const idx = data.decision.index - 1;
-      showProducts(data.all_products, idx);
-      setStep(2, 'done'); setStep(3, 'active');
+      setStep(2, 'done'); setStep(3, 'pending');
 
-      // STEP 3: Token
-      addLog('TOKEN', 'Requesting Shared Payment Token (SPT) from PSP...');
-      const tokenRes = await fetch(`${PSP}/v1/tokens`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ buyer_agent_id: 'razorpacp-browser-v2', max_amount: budget, currency: 'INR', expiry_seconds: 300 })
-      });
-      const tokenData = await tokenRes.json();
-      addLog('TOKEN', `Token: ${tokenData.shared_payment_token} | Max: ₹${tokenData.max_amount} | TTL: 5min`);
-      setStep(3, 'done'); setStep(4, 'active');
+      // Show confirmation card
+      document.getElementById('confirmName').textContent = data.decision.title;
+      document.getElementById('confirmSource').textContent = data.decision.source;
+      document.getElementById('confirmPrice').textContent = `₹${data.decision.price.toLocaleString('en-IN')}`;
+      document.getElementById('confirmReason').textContent = data.decision.reason;
+      document.getElementById('confirmCard').style.display = 'block';
 
-      // STEP 4: Pay
-      addLog('PAYMENT', 'Delegating payment to Razorpay via ACP PSP adapter...');
-      const chargeRes = await fetch(`${PSP}/v1/charges`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          shared_payment_token: tokenData.shared_payment_token,
-          amount: data.decision.price,
-          currency: 'INR',
-          session_id: `browser-${Date.now()}`,
-          description: `AI Purchase: ${data.decision.title.slice(0, 50)} from ${data.decision.source}`
-        })
-      });
+      addLog('CONFIRM', `Awaiting user confirmation before payment...`);
+      document.getElementById('logStatus').textContent = 'Awaiting Confirmation';
 
-      if (chargeRes.ok) {
-        const charge = await chargeRes.json();
-        addLog('SUCCESS', `✓ Payment complete! Razorpay Order: ${charge.razorpay_order_id}`);
-        setStep(4, 'done'); setStep(5, 'active');
-
-        orderCount++;
-        totalValue += data.decision.price;
-        document.getElementById('statOrders').textContent = orderCount;
-        document.getElementById('statValue').textContent = `₹${totalValue.toLocaleString('en-IN')}`;
-
-        document.getElementById('resultCard').style.display = 'block';
-        document.getElementById('resultRows').innerHTML = `
-          <div class="result-row"><span class="result-label">Product Selected by AI</span><span class="result-value highlight">${data.decision.title.slice(0, 45)}</span></div>
-          <div class="result-row"><span class="result-label">Source</span><span class="result-value">${data.decision.source}</span></div>
-          <div class="result-row"><span class="result-label">Amount Paid</span><span class="result-value highlight">₹${data.decision.price.toLocaleString('en-IN')}</span></div>
-          <div class="result-row"><span class="result-label">Razorpay Order ID</span><span class="result-value">${charge.razorpay_order_id}</span></div>
-          <div class="result-row"><span class="result-label">Payment Token</span><span class="result-value">${tokenData.shared_payment_token}</span></div>
-          <div class="result-row"><span class="result-label">AI Reasoning</span><span class="result-value" style="font-family:Inter;text-align:right;max-width:280px;font-size:11px;">${data.decision.reason}</span></div>
-        `;
-
-        document.getElementById('auditCard').style.display = 'block';
-        document.getElementById('auditRows').innerHTML = `
-          <div class="audit-row">
-            <span class="audit-time">${new Date().toLocaleTimeString()}</span>
-            <span class="audit-event event-session_created">session created</span>
-            <span class="audit-detail">Agent initiated purchase for: ${goal}</span>
-          </div>
-          <div class="audit-row">
-            <span class="audit-time">${new Date().toLocaleTimeString()}</span>
-            <span class="audit-event event-payment_completed">payment completed</span>
-            <span class="audit-detail">Razorpay order: ${charge.razorpay_order_id} | ₹${data.decision.price} | Token: ${tokenData.shared_payment_token}</span>
-          </div>
-        `;
-        setStep(5, 'done');
-        document.getElementById('logStatus').textContent = 'Completed';
-      } else {
-        const err = await chargeRes.json();
-        addLog('ERROR', `Payment failed: ${err.detail}`);
-        addLog('ESCALATE', 'Stopping — escalating to human. No further retries.');
-        document.getElementById('logStatus').textContent = 'Failed';
-      }
+      btn.textContent = '▶ Run AI Buyer Agent';
 
     } catch (e) {
       addLog('ERROR', `${e.message}`);
       document.getElementById('logStatus').textContent = 'Error';
+      btn.disabled = false;
+      btn.textContent = '▶ Run AI Buyer Agent';
     }
-
-    btn.disabled = false;
-    btn.textContent = '▶ Run AI Buyer Agent';
   }
 
   async function runFailureDemo() {
     document.getElementById('logBox').innerHTML = '';
     document.getElementById('resultCard').style.display = 'none';
     document.getElementById('auditCard').style.display = 'none';
+    document.getElementById('confirmCard').style.display = 'none';
     resetSteps();
 
     setStep(1, 'active');
@@ -463,13 +542,12 @@
     addLog('SEARCH', 'Found 0 products within budget ₹500');
     setStep(1, 'done'); setStep(2, 'active');
     await new Promise(r => setTimeout(r, 500));
-
     addLog('DECIDE', 'AI cannot select product — no results within budget');
-    setStep(2, 'done'); setStep(3, 'active');
+    setStep(2, 'done'); setStep(3, 'pending');
     await new Promise(r => setTimeout(r, 500));
 
-    addLog('TOKEN', 'Requesting SPT with max_amount: ₹500...');
-    const tokenRes = await fetch(`${PSP}/v1/tokens`, {
+    addLog('TOKEN', 'Requesting SPT with max_amount: ₹500 and TTL: 5 seconds...');
+    const tokenRes = await fetch(`${API}/v1/tokens`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ buyer_agent_id: 'failure-demo', max_amount: 500, currency: 'INR', expiry_seconds: 5 })
@@ -482,16 +560,10 @@
     await new Promise(r => setTimeout(r, 6000));
 
     addLog('RETRY', 'Attempt 1: Charging expired token...');
-    const chargeRes = await fetch(`${PSP}/v1/charges`, {
+    const chargeRes = await fetch(`${API}/v1/charges`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        shared_payment_token: tokenData.shared_payment_token,
-        amount: 499,
-        currency: 'INR',
-        session_id: `fail-${Date.now()}`,
-        description: 'Failure demo'
-      })
+      body: JSON.stringify({ shared_payment_token: tokenData.shared_payment_token, amount: 499, currency: 'INR', session_id: `fail-${Date.now()}`, description: 'Failure demo' })
     });
     const err = await chargeRes.json();
     addLog('ERROR', `Attempt 1 failed: ${err.detail}`);
@@ -502,16 +574,8 @@
 
     document.getElementById('auditCard').style.display = 'block';
     document.getElementById('auditRows').innerHTML = `
-      <div class="audit-row">
-        <span class="audit-time">${new Date().toLocaleTimeString()}</span>
-        <span class="audit-event event-session_created">session created</span>
-        <span class="audit-detail">Failure demo initiated</span>
-      </div>
-      <div class="audit-row">
-        <span class="audit-time">${new Date().toLocaleTimeString()}</span>
-        <span class="audit-event event-payment_failed">payment failed</span>
-        <span class="audit-detail">${err.detail} — escalated to human after 2 retries</span>
-      </div>
+      <div class="audit-row"><span class="audit-time">${new Date().toLocaleTimeString()}</span><span class="audit-event event-session_created">session created</span><span class="audit-detail">Failure demo initiated</span></div>
+      <div class="audit-row"><span class="audit-time">${new Date().toLocaleTimeString()}</span><span class="audit-event event-payment_failed">payment failed</span><span class="audit-detail">${err.detail} — escalated to human after 2 retries</span></div>
     `;
   }
 </script>
